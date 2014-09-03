@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- - En nuestro archivo web.xml, queremos dirigir todas las peticiones a un servlet denominado Servicio REST Jersey. 
+	 - También vamos a decirle a este servicio dónde encontrar los recursos que queremos poner a disposición 
+		de nuestra aplicación cliente. 
+	 - Actualice el archivo web.xml (o crearlo, en WebContent \ WEB-INF \ web.xml, si no existe)
+	    para que coincida con el XML se muestra a continuación.
+	 - El XML define el servicio REST Jersey de la clase com.sun.jersey.spi.container.ServletContainer. 
+	 - Esa clase, como ya habrás adivinado, es en uno de los Jersey Jarss. 
+	 - La sección init-param nos permite notificar que servletcontainer utilizar
+	 	 las clases que se encuentran en el paquete com.avilyne.rest.resource para el mapeo de URIs de código java. 	 
+	- En la sección servlet-mapping, creamos una url-pattern global, que esencialmente dice 
+	que cualquier petición que se dirige a / rest / intentará asignarse a los métodos apropiados.-->
+<web-app
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+    id="WebApp_ID"
+    version="3.0">
+    
+    
+    
+    
+
+  <servlet>
+    <servlet-name>givemeBookApp</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+       <param-name>contextConfigLocation</param-name>
+       <param-value>/WEB-INF/spring/app-config.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>givemeBookApp</servlet-name>
+    <url-pattern>*.html</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping> 
+	  <servlet-name> givemeBookApp </servlet-name> 
+	  <url-pattern> *.css </url-pattern> 
+  </servlet-mapping>
+  
+  <welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+    
+    
+    
+    
+  <display-name>JerseyRESTServer</display-name>
+  <servlet>
+    <servlet-name>Jersey REST Service</servlet-name>
+    <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+    <init-param>
+        <param-name>com.sun.jersey.config.property.packages</param-name>
+        <param-value>com.avilyne.rest.resource</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Jersey REST Service</servlet-name>
+    <url-pattern>/rest/*</url-pattern>
+  </servlet-mapping>
+</web-app>
